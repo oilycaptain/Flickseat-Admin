@@ -1,0 +1,961 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@400;500;600;700&display=swap');
+*{
+    font-family: "Poppins", "Montserrat",serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: rgb(0, 0, 0);
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.sidebar{
+    width: 290px;
+    height: calc(100vh - 32px);
+    background: #1c223b;
+    margin: 12px;
+    border-radius: 16px;
+    position: fixed;
+    transition: 0.4s ease;          
+}
+.sidebar.collapsed{
+    width: 85px;
+}
+.sidebar-header{
+    position: relative;
+    display: flex;
+    padding: 25px 20px;
+    align-items: center;
+    justify-content: space-between; 
+}
+.sidebar-header .header-logo img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+}
+.sidebar-nav .nav-link{
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 15px;
+    align-items: center;
+    display: flex;
+    border-radius: 8px;
+    gap: 10px; 
+    transition: 0.4s ease;
+    white-space: nowrap;
+}
+.sidebar-nav .nav-link:hover{
+    background: #fff;
+    color: #151a2d;
+}
+.sidebar-nav .nav-list{
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    padding: 0 15px;
+    flex-direction: column;
+    transform: translateY(15px);
+    transition: 0.4s ease;
+}
+.sidebar-header .toggler{
+    width: 35px;
+    height: 35px;
+    color: #151a2d;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s ease;
+}
+.sidebar-header .sidebar-toggler{
+    position: absolute;
+    right: 20px;
+}
+.sidebar-header .menu-toggler{
+    display: none;
+}
+.sidebar.collapsed .sidebar-header .sidebar-toggler{
+    transform: translate(-4px, 65px);
+}
+.sidebar.collapsed .sidebar-nav .primary-nav{
+    transform: translateY(65px);
+}
+.sidebar-header .sidebar-toggler span{
+    font-size: 1.75rem;
+    transition: 0.4s ease;
+}
+.sidebar-header .toggler:hover{
+    background: #dde4fb;
+}
+.sidebar.collapsed .sidebar-header .sidebar-toggler span{
+    transform: rotate(180deg);
+}
+.sidebar-nav .secondary-nav{
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+}
+.sidebar-nav .nav-link .nav-label{
+    transition: opacity 0.4s ease;
+}
+.sidebar.collapsed .sidebar-nav .nav-link .nav-label{
+    opacity: 0;
+    pointer-events: none;
+}
+.sidebar-nav .nav-tooltip{
+    opacity: 0;
+    pointer-events: none;
+    color: #151a2d;
+    padding: 6px 12px;
+    background: #fff;
+    border-radius: 8px;
+    position: absolute;
+    left: calc(100% + 25px);
+    top: -10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0 ,0.1);
+    white-space: nowrap;
+    transition: 0s ease;
+    display: none;
+}
+.sidebar-nav .nav-item{
+    position: relative;
+}
+.sidebar-nav .nav-item:hover .nav-tooltip{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(50%);
+    transition: 0.4s ease;
+}
+.sidebar.collapsed .sidebar-nav .nav-tooltip{
+    display: block;
+}
+
+@media (max-width: 1024px){
+    .sidebar {
+        margin: 13px;
+        width: calc(100% - 26px);
+        height: 56px;
+        overflow-y: hidden;
+        max-height: calc(100vh - 26px);
+        scrollbar-width: none;
+    }
+    .sidebar.menu-active{
+        overflow-y: auto;
+    }
+    .sidebar-header{
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: #151a2d;
+        padding: 8px 10px;
+        border-radius: 16px;
+    }
+
+    .sidebar-header .header-logo img{
+        width: 40px;
+        height: 40px;
+    }
+
+    .sidebar-nav .nav-list{
+        padding: 0 10px;
+    }
+
+    .sidebar-nav .nav-link{
+        gap: 10px;
+        padding: 10px;
+        font-size: 0.94rem;
+    }
+
+    .sidebar-nav .nav-link .nav-icon{
+        font-size: 1.37rem;
+    }
+    .sidebar-header .menu-toggler{
+        display: flex;
+        height: 30px;
+        width: 30px;
+    }
+    .sidebar-header .menu-toggler span{
+        font-size: 1.3rem;
+    }
+    .sidebar-header .sidebar-toggler{
+        display: none;
+    }
+    .sidebar-nav .secondary-nav{
+        position: relative;
+        bottom: 0;
+        margin: 40px 0 30px;
+    }
+}
+h1{
+    color: #fff;
+    font-size: 70px;
+    margin-left: 15px;
+}
+.box {
+    background-color: #1c223b;
+    width: 320px;
+    height: 180px;
+    position: relative;
+    border-radius: 8px;
+    z-index: -100;
+    margin-left: 15px;
+    display: flex; /* Enables flexbox */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+}
+
+.cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.text-card {
+    color: #fff;
+    font-weight: 100;
+    text-align: center;
+    position: relative; /* Removed absolute positioning */
+}
+
+.box2{
+    background-color: #1c223b;
+    width: 100%;
+    height: 550px;
+    margin-left: 10px;
+    margin-top: 10px;
+    position: relative;
+    z-index: -100;
+}
+
+.main-content {
+    padding: 20px;
+    text-align: Center;
+
+    margin-left: 250px; /* Adjust based on sidebar width */
+    transition: 0.4s ease;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: #b49cff;
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+    padding: 0 20px;
+    align-items: stretch;
+    justify-content: center;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    margin-right: -18px;
+}
+
+.charts-card {
+    background-color: #1e253d;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    padding: 20px 25px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.chart-title {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+#area-chart, #bar-chart {
+    width: 100%;
+    min-height: 350px;
+  }
+  
+.recent-reservations {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1c223b; /* Dark purple background */
+    border-radius: 10px;
+    color: white;
+}
+
+.recent-reservations h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #a29bfe; /* Light purple accent */
+}
+
+table {
+    
+    width: 100%;
+    max-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    background-color: #1e1e2f;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+th {
+    background-color: #2d2f45;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #444;
+}
+
+tr {
+    transition: background-color 0.2s ease-in-out;
+}
+
+tr:nth-child(even) {
+    background-color: #27293d;
+}
+
+tr:hover {
+    background-color: #32344e;
+}
+
+/* Pill style status badge */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 999px;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+}
+
+/* Status Colors */
+.status-pending {
+    background-color: #fbbf24;
+    color: #000;
+}
+
+.status-booked {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.status-used {
+    background-color: #10b981;
+    color: white;
+}
+
+.status-cancelled {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* Action Buttons */
+td button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    background-color: #4f46e5;
+    color: white;
+    margin: 2px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+td button:hover {
+    background-color: #6366f1;
+}
+.text3{
+    font-size: 30px;
+    font-weight: 200;
+    font-family: "Poppins";
+    margin-top: 60px;
+}
+.mem{
+    margin-top: 260px;
+}
+.members{
+    margin-top: 20px;
+}
+.wala{
+    color: #c71585;
+    font-size: 28px;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #29293d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #444;
+    text-align: center;
+}
+
+th {
+    background-color: #6a0dad;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #322653;
+}
+
+tr:hover {
+    background-color: #4b0082;
+    transition: 0.3s;
+}
+
+.status-booked {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #ffa500;
+    font-weight: bold;
+}
+
+.notification-container {
+    background: #29293D;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    margin: 8px;
+}
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+
+.notif-count {
+    background: #6A0DAD;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+.mark-all {
+    float: right;
+    cursor: pointer;
+    color: #A67FCB;
+}
+
+.mark-all:hover {
+    text-decoration: underline;
+}
+
+#notification-list {
+    list-style: none;
+    padding: 0;
+}
+
+.notification-item {
+    background: #3A3A55;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.notification-item.unread {
+    background: #6A0DAD;
+    color: white;
+}
+
+.notification-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.notification-item span {
+    flex-grow: 1;
+}
+
+.notification-item .delete-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.notification-item .delete-btn:hover {
+    color: #D33;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #29293D;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+}
+
+.close-btn:hover {
+    color: red;
+}
+.notification-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.notification-actions button {
+    background-color: #6A0DAD;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.notification-actions button:hover {
+    background-color: #5A0B8D;
+}
+
+.no-notifications {
+    text-align: center;
+    margin-top: 20px;
+    color: #A67FCB;
+    display: none;
+}
+
+.no-notifications-icon {
+    width: 80px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.container {
+    text-align: center;
+    background: rgba(45, 45, 45, 0.8);
+    margin-left: 20px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    color: #a855f7;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.button3{
+    align-items: center;
+    justify-content: center;
+
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #a855f7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    outline: none;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #7c3aed;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+
+.btn-add {
+    background-color: #4CAF50;
+}
+
+.btn-add:hover {
+    background-color: #45a049;
+}
+
+.btn-view {
+    background-color: #f39c12;
+}
+
+.btn-view:hover {
+    background-color: #e67e22;
+}
+.settings-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.settings-container {
+    display: block;
+    margin-left: 20px;
+}
+
+.settings-btn {
+    background-color: #4b0082;
+    color: #ffffff;
+    border: none;
+    padding: 16px 24px;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    width: 100%;
+    height: 90px;
+    margin-top: 12px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.settings-btn:hover {
+    background-color: #6a0dad;
+    transform: translateY(-2px);
+}
+
+.settings-btn:active {
+    background-color: #360066;
+    transform: translateY(0);
+}
+
+.material-symbols-rounded {
+    font-size: 24px;
+}
+
+h1 {
+    color: #9c27b0;
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+input, .btn2 {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+input {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+input:focus {
+    border: 1px solid #9c27b0;
+    outline: none;
+}
+
+/* Submit Button */
+.btn2 {
+    background-color: #9c27b0;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: background-color 0.3s;
+    font-size: 18px;
+}
+
+.btn2:hover {
+    background-color: #7b1fa2;
+}
+
+/* Error and Success Messages */
+.error-message, .strength-message {
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    min-width: 280px;
+    background-color: #333;
+    color: #fff;
+    padding: 14px;
+    text-align: center;
+    border-radius: 8px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 12px; /* Leave space for icon on the right */
+    border-radius: 8px;
+    background-color: #2c2c2c;
+    color: #fff;
+    border: 1px solid #444;
+    font-size: 16px;
+}
+
+.password-wrapper input:focus {
+    border: 1px solid #9c27b0;
+    outline: none;
+}
+
+/* Toggle Password Icon */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #9c27b0;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #7b1fa2;
+}
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.buttton3 {
+    padding: 10px 16px;
+    border: none;
+    background-color: #6d28d9;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buttton3:hover {
+    background-color: #8b5cf6;
+}
+/* Add to styles.css */
+/* Update legend styles in styles.css */
+.legend-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-box {
+    background-color: #1e253d;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 250px;
+}
+
+.legend-box h3 {
+    color: #b49cff;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: 1px solid #b49cff;
+    padding-bottom: 5px;
+}
+
+.legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+.legend-list li {
+    padding: 8px 0;
+    font-size: 15px;
+    border-bottom: 1px solid #2d2f45;
+}
+
+.legend-list li:last-child {
+    border-bottom: none;
+}
+
+/* Highlight the price */
+.legend-list li::after {
+    content: attr(data-price);
+    float: right;
+    color: #4CAF50;
+    font-weight: bold;
+}
+/* Add these styles to your CSS */
+.status-pending {
+    color: #FFA500;
+    font-weight: bold;
+}
+
+.status-booked {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-used {
+    color: #2196F3;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: #F44336;
+    font-weight: bold;
+}
+
+/* Make the table more compact for dashboard */
+.main-content table {
+    width: 97%;
+    margin: 20px auto;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.main-content table th {
+    padding: 10px;
+    background-color: #6A0DAD;
+}
+
+.main-content table td {
+    padding: 8px 10px;
+}
+
+.error-message {
+    color: #ff4444;
+    text-align: center;
+    padding: 15px;
+    background-color: #ffeeee;
+    border-radius: 4px;
+}
+
+.no-data {
+    color: #666;
+    text-align: center;
+    padding: 15px;
+    font-style: italic;
+}
+
+/* Status styles */
+.status-pending { color: #FFA500; font-weight: bold; }
+.status-booked { color: #4CAF50; font-weight: bold; }
+.status-used { color: #2196F3; font-weight: bold; }
+.status-cancelled { color: #F44336; font-weight: bold; }
+.status-unknown { color: #666; font-weight: bold; }

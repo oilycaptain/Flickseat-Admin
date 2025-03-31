@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Flickseat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #2a2a2a;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #bb86fc;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-grid > div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-grid > div:last-child {
+            grid-column: span 2;
+        }
+
+        label {
+            color: #bb86fc;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            padding: 0.75rem;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #333;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #bb86fc;
+            box-shadow: 0 0 5px rgba(187, 134, 252, 0.5);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background-color: #bb86fc;
+            color: #1e1e1e;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9a67ea;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid > div:last-child {
+                grid-column: span 1;
+            }
+        }
+        .snackbar {
+            display: none;
+            min-width: 250px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            padding: 16px;
+            border-radius: 8px;
+            position: fixed;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+
+        .snackbar.show {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="snackbar">Movie added successfully!</div>
+
+    <div class="container">
+        <h2>Add New Movie</h2>
+        <form id="movieForm" action="process_movie.php" method="POST">
+            <div class="form-grid">
+                <div>
+                    <label>Movie Title:</label>
+                    <input type="text" name="title" required>
+                </div>
+
+                <div>
+                    <label>Genre:</label>
+                    <input type="text" name="genre" required>
+                </div>
+
+                <div>
+                    <label>Duration (minutes):</label>
+                    <input type="number" name="duration" required>
+                </div>
+
+                <div>
+                    <label>Release Date:</label>
+                    <input type="date" name="release_date" required>
+                </div>
+
+                <div>
+                    <label>Status:</label>
+                    <select name="status" required>
+                        <option value="Now Showing">Now Showing</option>
+                        <option value="Upcoming">Upcoming</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Ticket Price (₱):</label>
+                    <input type="number" name="ticket_price" step="0.01" required>
+                </div>
+
+                <div>
+                    <label>TMDB ID:</label>
+                    <input type="number" name="tmdb_id" required>
+                </div>
+
+                <div>
+                    <label>Rating (0.0 to 10.0):</label>
+                    <input type="number" name="rating" step="0.1" min="0" max="10" required>
+                </div>
+
+                <div>
+                    <label>Overview:</label>
+                    <textarea name="overview" placeholder="Write a brief overview..." required></textarea>
+                </div>
+
+                <button type="submit">Add Movie</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+    document.getElementById("movieForm").addEventListener("submit", function(event) {
+        const price = parseFloat(document.querySelector('input[name="ticket_price"]').value);
+        const rating = parseFloat(document.querySelector('input[name="rating"]').value);
+
+        if (price < 50 || price > 1000) {
+            event.preventDefault();
+            alert("Ticket price should be between ₱50 and ₱1000.");
+        }
+
+        if (rating < 0 || rating > 10) {
+            event.preventDefault();
+            alert("Rating should be between 0.0 and 10.0.");
+        }
+    });
+
+    window.onload = () => {
+        document.getElementById('snackbar').style.display = 'none';
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.style.display = 'block';
+            snackbar.className = "snackbar show";
+            setTimeout(() => {
+                snackbar.className = snackbar.className.replace("show", "");
+                snackbar.style.display = 'none';
+            }, 3000);
+        }
+    };
+</script>
+
+</body>
+</html>
